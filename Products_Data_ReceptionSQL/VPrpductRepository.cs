@@ -42,6 +42,34 @@ namespace Products_Data_ReceptionSQL
 
         }
 
+        public void PrintProduct(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT * FROM VeganProducts WHERE Id = @Id", connection))
+                {
+                    command.Parameters.Add(new SqlParameter("Id", id));
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                              Console.WriteLine(reader.GetValue(i));
+                            }
+
+                            Console.WriteLine();
+
+                        }
+                    }
+                }
+            }
+
+        }
+
 
         public List<VeganProduct> GetAll()
         {
@@ -71,6 +99,7 @@ namespace Products_Data_ReceptionSQL
 
             }
         }
+
 
 
         public void Update(VeganProduct item)
@@ -120,7 +149,7 @@ namespace Products_Data_ReceptionSQL
                 }
             }
 
-           
+
         }
 
 

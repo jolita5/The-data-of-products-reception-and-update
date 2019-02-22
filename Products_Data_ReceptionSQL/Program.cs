@@ -15,15 +15,27 @@ namespace Products_Data_ReceptionSQL
 
 
             VPrpductRepository myProduct = new VPrpductRepository();
-            //var product = myProduct.Get(2);
+
+            var product = myProduct.Get(1);
+            myProduct.PrintProduct(2);
+
+
+            var allProducts = myProduct.GetAll();
+            var sorting = allProducts.OrderBy(i => i.Price);
+
+            foreach(var item in sorting)
+            {
+                Console.WriteLine(item.ToString());
+            }
+
+            //var product2 = myProduct.Get(2);
             //product.Name = "Vegetables_sticks";
             //product.Price = 12.2m;
             //myProduct.Update(product);
 
-          //  var allProducts = myProduct.GetAll();
 
-           // myProduct.Add(new VeganProduct() { Name = "Almond desert", Price = 6.6m });
-            myProduct.Delete(8);
+            //myProduct.Add(new VeganProduct() { Name = "Almond desert", Price = 6.6m });
+            //myProduct.Delete(8);
 
             Console.ReadLine();
 
