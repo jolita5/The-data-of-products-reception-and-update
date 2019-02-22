@@ -22,8 +22,8 @@ namespace Products_Data_ReceptionSQL
 
           //  var allProducts = myProduct.GetAll();
 
-            myProduct.Add(new VeganProduct() { Name = "Almond desert", Price = 6.6m });
-
+           // myProduct.Add(new VeganProduct() { Name = "Almond desert", Price = 6.6m });
+            myProduct.Delete(8);
 
             Console.ReadLine();
 

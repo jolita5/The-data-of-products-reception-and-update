@@ -8,7 +8,7 @@ namespace Products_Data_ReceptionSQL
 {
     public class VeganProduct
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price {get; set;}
     }

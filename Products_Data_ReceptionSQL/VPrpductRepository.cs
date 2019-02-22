@@ -18,7 +18,7 @@ namespace Products_Data_ReceptionSQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM VeganProducts WHERE ID =@Id", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM VeganProducts WHERE Id =@Id", connection))
                 {
                     command.Parameters.Add(new SqlParameter("Id", id));
                     SqlDataReader reader = command.ExecuteReader();
@@ -29,7 +29,7 @@ namespace Products_Data_ReceptionSQL
                         {
                             return new VeganProduct
                             {
-                                ID = reader.GetInt32(0),
+                                Id = reader.GetInt32(0),
                                 Name = reader.GetString(1),
                                 Price = reader.GetDecimal(2)
                             };
@@ -59,7 +59,7 @@ namespace Products_Data_ReceptionSQL
                         {
                             result.Add(new VeganProduct
                             {
-                                ID = reader.GetInt32(0),
+                                Id = reader.GetInt32(0),
                                 Name = reader.GetString(1),
                                 Price = reader.GetDecimal(2)
                             });
@@ -79,11 +79,11 @@ namespace Products_Data_ReceptionSQL
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand("UPDATE VeganProducts SET " +
-                    "Name = @Name, Price = @Price WHERE ID=@Id", connection))
+                    "Name = @Name, Price = @Price WHERE Id=@Id", connection))
                 {
                     command.Parameters.Add(new SqlParameter("Name", item.Name));
                     command.Parameters.Add(new SqlParameter("Price", item.Price));
-                    command.Parameters.Add(new SqlParameter("Id", item.ID));
+                    command.Parameters.Add(new SqlParameter("Id", item.Id));
                     command.ExecuteNonQuery();
                 }
 
@@ -107,10 +107,21 @@ namespace Products_Data_ReceptionSQL
             }
         }
 
-        //public void Delete(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public void Delete(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(
+                    "DELETE FROM VeganProducts WHERE Id = @Id", connection))
+                {
+                    command.Parameters.Add(new SqlParameter("Id", id));
+                    command.ExecuteNonQuery();
+                }
+            }
+
+           
+        }
 
 
     }
