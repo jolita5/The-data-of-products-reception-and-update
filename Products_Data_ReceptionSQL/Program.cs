@@ -13,7 +13,7 @@ namespace Products_Data_ReceptionSQL
         static void Main(string[] args)
         {
 
-           // Console.WriteLine("Customer LIST");
+            // Console.WriteLine("Customer LIST");
             //VPrpductRepository myProduct = new VPrpductRepository();
 
             //var product = myProduct.Get(1);
@@ -38,20 +38,34 @@ namespace Products_Data_ReceptionSQL
             //myProduct.Delete(8);
 
 
-            Console.WriteLine("Customer LIST");
+            //Console.WriteLine("Customer LIST");
 
-            CustomerRepository myCustomer = new CustomerRepository();
+            //CustomerRepository myCustomer = new CustomerRepository();
 
-            var allProducts = myCustomer.GetAll();
-            var sorting = allProducts.OrderBy(i => i.Name);
+            //var allProducts = myCustomer.GetAll();
+            //var sorting = allProducts.OrderBy(i => i.Name);
 
-            foreach (var item in sorting)
-            {
-                Console.WriteLine(item.ToString());
-            }
+            //foreach (var item in sorting)
+            //{
+            //    Console.WriteLine(item.ToString());
+            //}
 
-           // myCustomer.Add(new Customer() { Name = "gfsdfgs", Surname = "dffrft", City = "Kaunas" });
-             myCustomer.Delete(7);
+            // myCustomer.Add(new Customer() { Name = "gfsdfgs", Surname = "dffrft", City = "Kaunas" });
+            // myCustomer.Delete(7);
+            Console.WriteLine("Order LIST");
+            OrderRepository myOrder = new OrderRepository();
+
+            //    myOrder.Get(1);
+
+            //  myOrder.PrintAll();
+            //var sorting = allOrders.OrderBy(i => i.Date);
+
+            //foreach (var item in sorting)
+            //{
+            //    Console.WriteLine(item.ToString());
+            //}
+
+            myOrder.Delete(7);
 
             Console.ReadLine();
 
