@@ -14,7 +14,7 @@ namespace Products_Data_ReceptionSQL
         {
 
             // Console.WriteLine("Customer LIST");
-            //VPrpductRepository myProduct = new VPrpductRepository();
+            VPrpductRepository myProduct = new VPrpductRepository();
 
             //var product = myProduct.Get(1);
             //myProduct.PrintProduct(2);
@@ -54,8 +54,8 @@ namespace Products_Data_ReceptionSQL
             // myCustomer.Delete(7);
             Console.WriteLine("Order LIST");
             OrderRepository myOrder = new OrderRepository();
-
-            //    myOrder.Get(1);
+       
+           //  myOrder.Get(1);
 
             //  myOrder.PrintAll();
             //var sorting = allOrders.OrderBy(i => i.Date);
@@ -65,7 +65,10 @@ namespace Products_Data_ReceptionSQL
             //    Console.WriteLine(item.ToString());
             //}
 
-            myOrder.Delete(7);
+          //  myOrder.Add(new Order() { CustomerID = 3, ProductID = 3, Amount = 1, Order_date = DateTime.Now });
+
+
+            myOrder.Delete(16);
 
             Console.ReadLine();
 

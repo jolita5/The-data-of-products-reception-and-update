@@ -19,7 +19,7 @@ namespace Products_Data_ReceptionSQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM OrdersVegan WHERE Id=@Id", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM OrdersVegan WHERE Id = @Id", connection))
                 {
                     command.Parameters.Add(new SqlParameter("Id", id));
                     SqlDataReader reader = command.ExecuteReader();
@@ -31,10 +31,10 @@ namespace Products_Data_ReceptionSQL
                             return new Order
                             {
                                 Id = reader.GetInt32(0),
-                                CustomerID = customer.Id = reader.GetInt32(1),
-                                ProductID = product.Id = reader.GetInt32(2),
+                                CustomerID = reader.GetInt32(1),
+                                ProductID = reader.GetInt32(2),
                                 Amount = reader.GetDecimal(3),
-                                Date = reader.GetDateTime(4)
+                                Order_date = reader.GetDateTime(4)
                             };
 
                         }
@@ -94,7 +94,7 @@ namespace Products_Data_ReceptionSQL
                                 CustomerID = reader.GetInt32(1),
                                 ProductID = reader.GetInt32(2),
                                 Amount = reader.GetDecimal(3),
-                                Date = reader.GetDateTime(4)
+                                Order_date = reader.GetDateTime(4)
                             });
                         }
                     }
@@ -117,6 +117,7 @@ namespace Products_Data_ReceptionSQL
                     "JOIN Customer c on CustomerID = c.Id +" +
                     "JOIN VeganProducts p on ProductID = p.Id", connection))
                 {
+
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
@@ -146,7 +147,7 @@ namespace Products_Data_ReceptionSQL
                     command.Parameters.Add(new SqlParameter("CustomerID", customer.Id));
                     command.Parameters.Add(new SqlParameter("ProductID", product.Id));
                     command.Parameters.Add(new SqlParameter("Amount", item.Amount));
-                    command.Parameters.Add(new SqlParameter("Date", item.Date));
+                    command.Parameters.Add(new SqlParameter("Date", item.Order_date));
 
                     command.ExecuteNonQuery();
                 }
@@ -161,13 +162,13 @@ namespace Products_Data_ReceptionSQL
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(
-                    "INSERT INTO OrdersVegan (CustomerID, ProductID, Amount, Date) " +
+                    "INSERT INTO OrdersVegan (CustomerID, ProductID, Amount, Order_date) " +
                     "VALUES(@CustomerID, @ProductID, @Amount, @Order_date)", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("CustomerID", item.CustomerID));
-                    command.Parameters.Add(new SqlParameter("ProductID", item.ProductID));
-                    command.Parameters.Add(new SqlParameter("Amount", item.Amount));
-                    command.Parameters.Add(new SqlParameter("Date", item.Date));
+                    command.Parameters.Add(new SqlParameter("@CustomerID", item.CustomerID));
+                    command.Parameters.Add(new SqlParameter("@ProductID", item.ProductID));
+                    command.Parameters.Add(new SqlParameter("@Amount", item.Amount));
+                    command.Parameters.Add(new SqlParameter("@Order_date", item.Order_date));
                     command.ExecuteNonQuery();
                 }
             }
