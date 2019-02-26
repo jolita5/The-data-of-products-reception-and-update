@@ -9,12 +9,11 @@ namespace Products_Data_ReceptionSQL
     public class Order
     {
         public int Id { get; set; }
-        public int CustomerID { get; set; }
-        public int ProductID { get; set; }
+        public virtual int CustomerID { get; set; }
+        public virtual int ProductID { get; set; }
         public DateTime Order_date { get; set; }
         public decimal Amount { get; set; }
-        Customer customer = new Customer();
-        VeganProduct product = new VeganProduct();
+ 
 
         public override string ToString()
         {

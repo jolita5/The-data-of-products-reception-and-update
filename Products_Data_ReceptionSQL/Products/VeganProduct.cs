@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Products_Data_ReceptionSQL
 {
-    public class VeganProduct
+    public class VeganProduct:Order
     {
-        public int Id { get; set; }
+        public override int ProductID { get; set; }
         public string Name { get; set; }
         public decimal Price {get; set;}
 

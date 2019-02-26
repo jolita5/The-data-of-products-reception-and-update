@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Products_Data_ReceptionSQL
 {
-    public class Customer
+    public class Customer:Order
     {
-        public int Id { get; set; }
+        public override int CustomerID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string City { get; set; }

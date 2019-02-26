@@ -18,15 +18,21 @@ namespace Products_Data_ReceptionSQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Customer WHERE Id =@Id", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Customer WHERE Id =@CustomerID", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("Id", id));
+                    command.Parameters.Add(new SqlParameter("@CustomerID", id));
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)
                     {
+                        
                         while (reader.Read())
                         {
+                            if (String.IsNullOrEmpty(reader["Id"].ToString())) // todo: doesn't work
+                            {
+                                return null;
+                            }
+
                             return new Customer
                             {
                                 Id = reader.GetInt32(0),
@@ -37,41 +43,13 @@ namespace Products_Data_ReceptionSQL
                             };
 
                         }
+
                     }
                     return null;
                 }
             }
 
         }
-
-        public void PrintProduct(int id)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM Customer WHERE Id = @Id", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("Id", id));
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                Console.WriteLine(reader.GetValue(i));
-                            }
-
-                            Console.WriteLine();
-
-                        }
-                    }
-                }
-            }
-
-        }
-
 
         public List<Customer> GetAll()
         {
@@ -85,6 +63,7 @@ namespace Products_Data_ReceptionSQL
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
                     {
+
                         while (reader.Read())
                         {
                             result.Add(new Customer
@@ -96,6 +75,8 @@ namespace Products_Data_ReceptionSQL
 
                             });
                         }
+
+
                     }
 
                     return result;
@@ -108,16 +89,18 @@ namespace Products_Data_ReceptionSQL
 
         public void Update(Customer item)
         {
+            int id = 0;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand("UPDATE VeganProducts SET " +
-                    "Name = @Name, Surname = @Surname, City = @City WHERE Id=@Id", connection))
+                    "Name = @Name, Surname = @Surname, City = @City WHERE Id=@CustomerID", connection))
                 {
                     command.Parameters.Add(new SqlParameter("Name", item.Name));
                     command.Parameters.Add(new SqlParameter("Surname", item.Surname));
                     command.Parameters.Add(new SqlParameter("City", item.City));
                     command.ExecuteNonQuery();
+                       
                 }
 
             }
@@ -147,9 +130,9 @@ namespace Products_Data_ReceptionSQL
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(
-                    "DELETE FROM Customer WHERE Id = @Id", connection))
+                    "DELETE FROM Customer WHERE Id = @CustomerID", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("Id", id));
+                    command.Parameters.Add(new SqlParameter("@CustomerID", id));
                     command.ExecuteNonQuery();
                 }
             }

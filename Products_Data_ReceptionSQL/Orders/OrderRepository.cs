@@ -10,8 +10,7 @@ namespace Products_Data_ReceptionSQL
     public class OrderRepository:IRepository<Order>
     {
         private const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB; Initial Catalog=VegianProducts";
-        Customer customer = new Customer();
-        VeganProduct product = new VeganProduct();
+
 
 
         public Order Get(int id)
@@ -19,9 +18,9 @@ namespace Products_Data_ReceptionSQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM OrdersVegan WHERE Id = @Id", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM OrdersVegan WHERE Id=@Id", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("Id", id));
+                    command.Parameters.Add(new SqlParameter("@Id", id));
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)
@@ -45,35 +44,7 @@ namespace Products_Data_ReceptionSQL
 
         }
 
-        public void PrintProduct(int id)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM OrdersVegan WHERE Id = @Id", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("Id", id));
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                Console.WriteLine(reader.GetValue(i));
-                            }
-
-                            Console.WriteLine();
-
-                        }
-                    }
-                }
-            }
-
-        }
-
-
+   
         public List<Order> GetAll()
         {
             var result = new List<Order>();
@@ -81,7 +52,7 @@ namespace Products_Data_ReceptionSQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM OrdersVegan", connection))
+                using (SqlCommand command = new SqlCommand("SELECT OrdersVegan.* From OrdersVegan ", connection))
                 {
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.HasRows)
@@ -112,10 +83,7 @@ namespace Products_Data_ReceptionSQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT c.Name, c.Surname, c.City, p.Name, p.Price, o.* +" +
-                    " FROM OrdersVegan o +" +
-                    "JOIN Customer c on CustomerID = c.Id +" +
-                    "JOIN VeganProducts p on ProductID = p.Id", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM OrdersVegan", connection))
                 {
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -123,12 +91,13 @@ namespace Products_Data_ReceptionSQL
                     {
                         while (reader.Read())
                         {
-                            for (int i = 0; i < reader.FieldCount; i++)
+                            for(int i = 0; i<reader.FieldCount; i++)
                             {
                                 Console.WriteLine(reader.GetValue(i));
                             }
                         }
                     }
+
                 }
 
             }
@@ -142,12 +111,12 @@ namespace Products_Data_ReceptionSQL
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand("UPDATE OrdersVegan SET " +
-                    "CustomerID = @CustomerID, ProductID = @ProductID, Amount = @Amount, Date = @Order_Date WHERE Id=@Id", connection))
+                    "CustomerID = @CustomerID, ProductID = @ProductID, Amount = @Amount, Order_date = @Order_Date WHERE Id=@Id", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("CustomerID", customer.Id));
-                    command.Parameters.Add(new SqlParameter("ProductID", product.Id));
-                    command.Parameters.Add(new SqlParameter("Amount", item.Amount));
-                    command.Parameters.Add(new SqlParameter("Date", item.Order_date));
+                    command.Parameters.Add(new SqlParameter("@CustomerID", item.CustomerID));
+                    command.Parameters.Add(new SqlParameter("@ProductID", item.ProductID));
+                    command.Parameters.Add(new SqlParameter("@Amount", item.Amount));
+                    command.Parameters.Add(new SqlParameter("@Date", item.Order_date));
 
                     command.ExecuteNonQuery();
                 }

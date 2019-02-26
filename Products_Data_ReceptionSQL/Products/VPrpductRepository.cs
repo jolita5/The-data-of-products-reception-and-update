@@ -18,9 +18,9 @@ namespace Products_Data_ReceptionSQL
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM VeganProducts WHERE Id =@Id", connection))
+                using (SqlCommand command = new SqlCommand("SELECT * FROM VeganProducts WHERE Id =@ProductID", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("Id", id));
+                    command.Parameters.Add(new SqlParameter("@ProductID", id));
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)
@@ -42,33 +42,7 @@ namespace Products_Data_ReceptionSQL
 
         }
 
-        public void PrintProduct(int id)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT * FROM VeganProducts WHERE Id = @Id", connection))
-                {
-                    command.Parameters.Add(new SqlParameter("Id", id));
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                              Console.WriteLine(reader.GetValue(i));
-                            }
-
-                            Console.WriteLine();
-
-                        }
-                    }
-                }
-            }
-
-        }
+      
 
 
         public List<VeganProduct> GetAll()
@@ -108,11 +82,11 @@ namespace Products_Data_ReceptionSQL
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand("UPDATE VeganProducts SET " +
-                    "Name = @Name, Price = @Price WHERE Id=@Id", connection))
+                    "Name = @Name, Price = @Price WHERE Id=@ProductID", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("Name", item.Name));
-                    command.Parameters.Add(new SqlParameter("Price", item.Price));
-                    command.Parameters.Add(new SqlParameter("Id", item.Id));
+                    command.Parameters.Add(new SqlParameter("@Name", item.Name));
+                    command.Parameters.Add(new SqlParameter("@Price", item.Price));
+                    command.Parameters.Add(new SqlParameter("@ProductID", item.Id));
                     command.ExecuteNonQuery();
                 }
 
@@ -129,8 +103,8 @@ namespace Products_Data_ReceptionSQL
                     "INSERT INTO VeganProducts (Name, Price) " +
                     "VALUES(@Name, @Price)", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("Name", item.Name));
-                    command.Parameters.Add(new SqlParameter("Price", item.Price));
+                    command.Parameters.Add(new SqlParameter("@Name", item.Name));
+                    command.Parameters.Add(new SqlParameter("@Price", item.Price));
                     command.ExecuteNonQuery();
                 }
             }
@@ -142,9 +116,9 @@ namespace Products_Data_ReceptionSQL
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(
-                    "DELETE FROM VeganProducts WHERE Id = @Id", connection))
+                    "DELETE FROM VeganProducts WHERE Id = @ProductID", connection))
                 {
-                    command.Parameters.Add(new SqlParameter("Id", id));
+                    command.Parameters.Add(new SqlParameter("@ProductID", id));
                     command.ExecuteNonQuery();
                 }
             }
